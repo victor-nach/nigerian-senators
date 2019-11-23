@@ -1,4 +1,4 @@
-package db
+package models
 
 import (
 	"log"
@@ -6,8 +6,6 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-
-	"github.com/victor-nach/nigerian-senators/api/models"
 )
 
 var db *gorm.DB
@@ -27,7 +25,18 @@ func init() {
 	log.Println("Succesfully connected to the db")
 	defer db.Close()
 
-	db.Debug().AutoMigrate(&models.Senators{})
+	db.Debug().AutoMigrate(Senator{})
+
+	// seed db
+	senator := Senator{
+		FullName: "orji uzor kalu",
+		State: "abia",
+	}
+	// it automatically knows which table to put the data in
+	err = db.Create(&senator).Error
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 func Db() *gorm.DB {
