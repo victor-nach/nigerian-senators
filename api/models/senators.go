@@ -1,10 +1,11 @@
 package models
 
 import (
-	"github.com/victor-nach/nigerian-senators/api/db"
+	"log"
+	// "github.com/victor-nach/nigerian-senators/api/db"
 )
 
-type Senators struct {
+type Senator struct {
 	FullName		string
 	State			string
 	District		string
@@ -12,11 +13,17 @@ type Senators struct {
 	email			string
 }
 
+// var Senators []Senators
 // db := db.Db()
 
 
 // GetAll - returns an array containing all the senators
-func (s *Senators) GetAll() (*[]Senators, error) {
-	senators := []Senators{}
-	err := db.Db().Debug.Find(&Senators).Error
+func (s Senator) GetAll() ([]Senator, error) {
+	Senators := []Senator{}
+	err := Db().Model(&Senator{}).Find(&Senators).Error
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println(Senators)
+	return Senators, nil
 }

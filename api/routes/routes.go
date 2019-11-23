@@ -10,6 +10,7 @@ func Router() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	// router.HandleFunc("/", controllers.Welcome).Methods("GET")
 	router.HandleFunc("/", controllers.Welcome).Methods("GET")
+	router.HandleFunc("/senators", controllers.GetAllSenators).Methods("GET")
 
 	return router
 }
